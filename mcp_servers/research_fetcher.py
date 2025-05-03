@@ -1,0 +1,2 @@
+def register(mcp):
+    pass
