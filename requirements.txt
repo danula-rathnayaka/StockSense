@@ -1,5 +1,6 @@
 langchain
+langchain-community
+langchain-ollama
 fastapi
 mcp
-openai
-requests
+ollama

@@ -1,13 +1,50 @@
 from mcp.server.fastmcp import FastMCP
-from mcp_servers import news_aggregator, stock_data, research_fetcher, sentiment_analyzer, trend_watcher
 
+# Create an MCP server instance
 mcp = FastMCP("StockSense")
 
-news_aggregator.register(mcp)
-stock_data.register(mcp)
-research_fetcher.register(mcp)
-sentiment_analyzer.register(mcp)
-trend_watcher.register(mcp)
+# Registering news aggregator tool with a basic string processing
+@mcp.tool()
+def get_news_articles(stock_symbol: str) -> str:
+    """
+    Simulating fetching news articles by reversing the stock symbol as a placeholder.
+    """
+    return f"Processed news for stock: {stock_symbol[::-1]}"  # Reversing the stock symbol
 
+# Registering stock data tool with a basic calculation
+@mcp.tool()
+def get_stock_data(stock_symbol: str) -> str:
+    """
+    Simulating stock data retrieval by calculating the length of the stock symbol.
+    """
+    return f"Stock data length for {stock_symbol}: {len(stock_symbol)}"
+
+# Registering research fetcher tool with simple word count
+@mcp.tool()
+def fetch_research_papers(stock_symbol: str) -> str:
+    """
+    Simulating fetching research papers by counting the number of characters in the stock symbol.
+    """
+    return f"Research paper placeholder: {stock_symbol} has {len(stock_symbol)} characters"
+
+# Registering sentiment analyzer tool with simple text analysis
+@mcp.tool()
+def analyze_sentiment(text: str) -> str:
+    """
+    Simulating sentiment analysis by counting the vowels in the input text.
+    """
+    vowels = "AEIOUaeiou"
+    vowel_count = sum(1 for char in text if char in vowels)
+    return f"Sentiment analysis placeholder: {vowel_count} vowels found in '{text}'"
+
+# Registering trend watcher tool with string manipulation
+@mcp.tool()
+def track_market_trends(stock_symbol: str) -> str:
+    """
+    Simulating trend tracking by returning the stock symbol in uppercase.
+    """
+    return f"Market trend for {stock_symbol}: {stock_symbol.upper()}"
+
+# Start the MCP server and make it ready to accept requests
 if __name__ == "__main__":
     mcp.run()
