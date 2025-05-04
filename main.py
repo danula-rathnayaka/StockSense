@@ -1,15 +1,26 @@
 from mcp.server.fastmcp import FastMCP
 
+from langchain_chains.news_chain import get_news_analysis
+
 # Create an MCP server instance
 mcp = FastMCP("StockSense")
 
 # Registering news aggregator tool with a basic string processing
 @mcp.tool()
-def get_news_articles(stock_symbol: str) -> str:
+def get_news_(stock_symbol: str) -> str:
     """
-    Simulating fetching news articles by reversing the stock symbol as a placeholder.
+    Simulates fetching news for a stock symbol by returning a placeholder analysis.
+    
+    This function takes a stock symbol, processes it (e.g., reverses the symbol), 
+    and returns a simulated news analysis.
+
+    Parameters:
+        stock_symbol (str): The stock symbol to find information about
+
+    Returns:
+        str: A simulated news analysis
     """
-    return f"Processed news for stock: {stock_symbol[::-1]}"  # Reversing the stock symbol
+    return get_news_analysis(stock_symbol)
 
 # Registering stock data tool with a basic calculation
 @mcp.tool()
