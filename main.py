@@ -63,32 +63,6 @@ def get_stock_data(stock_symbol: str, time_period: str = "1y", start_date: str =
     return get_stock_data_by_period(stock_symbol, time_period)
 
 @mcp.tool()
-def financial_advisor(stock_symbol: str) -> str:
-    """ 
-    Provides financial advice based on stock symbol by fetching stock data and analyzing sentiment.
-    
-    Arguments:
-        stock_symbol (str): The stock symbol to provide financial advice for.
-
-    Returns:
-        str: Simulated financial advice based on data and sentiment analysis.
-    """
-    return get_financial_advisor(stock_symbol)
-
-@mcp.tool()
-def track_market_trends(stock_symbol: str) -> str:
-    """ 
-    Tracks and provides a market trend for a given stock symbol by querying DuckDuckGo and summarizing using Ollama.
-    
-    Arguments:
-        stock_symbol (str): The stock symbol to fetch market trends for.
-
-    Returns:
-        str: A simulated market trend summary.
-    """
-    return get_market_trends(stock_symbol)
-
-@mcp.tool()
 def analyze_sentiment(text: str) -> str:
     """
     Analyzes the sentiment of financial or stock-related text using a language model (LLM) via Ollama.
@@ -112,6 +86,32 @@ def analyze_sentiment(text: str) -> str:
         other domains or non-financial sentiment analysis tasks.
     """
     return get_sentiment_analysis(text)
+
+@mcp.tool()
+def track_market_trends(stock_symbol: str) -> str:
+    """ 
+    Tracks and provides a market trend for a given stock symbol by querying DuckDuckGo and summarizing using Ollama.
+    
+    Arguments:
+        stock_symbol (str): The stock symbol to fetch market trends for.
+
+    Returns:
+        str: A simulated market trend summary.
+    """
+    return get_market_trends(stock_symbol)
+
+@mcp.tool()
+def financial_advisor(stock_symbol: str) -> str:
+    """ 
+    Provides financial advice based on stock symbol by fetching stock data and analyzing sentiment.
+    
+    Arguments:
+        stock_symbol (str): The stock symbol to provide financial advice for.
+
+    Returns:
+        str: Simulated financial advice based on data and sentiment analysis.
+    """
+    return get_financial_advisor(stock_symbol)
 
 # Start the MCP server and make it ready to accept requests
 if __name__ == "__main__":
