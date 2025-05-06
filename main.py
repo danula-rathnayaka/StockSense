@@ -3,11 +3,11 @@ from mcp.server.fastmcp import FastMCP
 from langchain_chains.news_chain import get_news_analysis as get_news_analysis_chain
 from langchain_chains.stock_data import get_stock_data_by_dates, get_stock_data_by_period
 from langchain_chains.analyze_sentiment import get_sentiment_analysis
+from langchain_chains.financial_advisor import get_financial_advisor
 
 # Create an MCP server instance
 mcp = FastMCP("StockSense")
 
-# Registering news aggregator tool with a basic string processing
 @mcp.tool()
 def get_news(stock_symbol: str) -> str:
     """
@@ -24,7 +24,6 @@ def get_news(stock_symbol: str) -> str:
     """
     return get_news_analysis_chain(stock_symbol)
 
-# Registering stock data tool with a basic calculation
 @mcp.tool()
 def get_stock_data(stock_symbol: str, time_period: str = "1y", start_date: str = None, end_date: str = None) -> str:
     """
@@ -62,15 +61,19 @@ def get_stock_data(stock_symbol: str, time_period: str = "1y", start_date: str =
     # If no date range, get data by time period
     return get_stock_data_by_period(stock_symbol, time_period)
 
-# Registering research fetcher tool with simple word count
 @mcp.tool()
-def fetch_research_papers(stock_symbol: str) -> str:
-    """
-    Simulating fetching research papers by counting the number of characters in the stock symbol.
-    """
-    return f"Research paper placeholder: {stock_symbol} has {len(stock_symbol)} characters"
+def financial_advisor(stock_symbol: str) -> str:
+    """ 
+    Provides financial advice based on stock symbol by fetching stock data and analyzing sentiment.
+    
+    Arguments:
+        stock_symbol (str): The stock symbol to provide financial advice for.
 
-# Registering sentiment analyzer tool with simple text analysis
+    Returns:
+        str: Simulated financial advice based on data and sentiment analysis.
+    """
+    return get_financial_advisor(stock_symbol)
+
 @mcp.tool()
 def analyze_sentiment(text: str) -> str:
     """
@@ -96,7 +99,6 @@ def analyze_sentiment(text: str) -> str:
     """
     return get_sentiment_analysis(text)
 
-# Registering trend watcher tool with string manipulation
 @mcp.tool()
 def track_market_trends(stock_symbol: str) -> str:
     """
