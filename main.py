@@ -2,6 +2,8 @@ from mcp.server.fastmcp import FastMCP
 
 from langchain_chains.news_chain import get_news_analysis as get_news_analysis_chain
 from langchain_chains.stock_data import get_stock_data_by_dates, get_stock_data_by_period
+from langchain_chains.analyze_sentiment import get_sentiment_analysis
+
 # Create an MCP server instance
 mcp = FastMCP("StockSense")
 
@@ -72,11 +74,27 @@ def fetch_research_papers(stock_symbol: str) -> str:
 @mcp.tool()
 def analyze_sentiment(text: str) -> str:
     """
-    Simulating sentiment analysis by counting the vowels in the input text.
+    Analyzes the sentiment of financial or stock-related text using a language model (LLM) via Ollama.
+
+    This tool uses a fine-tuned LLM (e.g., LLaMA 3.2 via Ollama) to classify the sentiment of a 
+    given input text as Positive, Negative, or Neutral. It is designed specifically for financial 
+    contexts, including stock news, earnings reports, or market commentary.
+
+    The tool returns a structured response that includes:
+      - Sentiment classification (Positive, Negative, or Neutral)
+      - A concise explanation supporting the sentiment decision
+
+    Args:
+        text (str): The financial or stock-related input text to analyze.
+
+    Returns:
+        str: A structured string containing the sentiment classification and a brief reasoning.
+
+    Note:
+        This function is optimized for finance-specific language and may not generalize well to
+        other domains or non-financial sentiment analysis tasks.
     """
-    vowels = "AEIOUaeiou"
-    vowel_count = sum(1 for char in text if char in vowels)
-    return f"Sentiment analysis placeholder: {vowel_count} vowels found in '{text}'"
+    return get_sentiment_analysis(text)
 
 # Registering trend watcher tool with string manipulation
 @mcp.tool()
@@ -88,4 +106,4 @@ def track_market_trends(stock_symbol: str) -> str:
 
 # Start the MCP server and make it ready to accept requests
 if __name__ == "__main__":
-    mcp.run(transport="STDIO") #  transport = SSE | STDIO
+    mcp.run()
