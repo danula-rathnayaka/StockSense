@@ -1,9 +1,10 @@
 from mcp.server.fastmcp import FastMCP
 
-from langchain_chains.news_chain import get_news_analysis as get_news_analysis_chain
-from langchain_chains.stock_data import get_stock_data_by_dates, get_stock_data_by_period
-from langchain_chains.analyze_sentiment import get_sentiment_analysis
-from langchain_chains.financial_advisor import get_financial_advisor
+from src.news_chain import get_news_analysis as get_news_analysis_chain
+from src.stock_data import get_stock_data_by_dates, get_stock_data_by_period
+from src.analyze_sentiment import get_sentiment_analysis
+from src.financial_advisor import get_financial_advisor
+from src.market_trend import get_market_trends
 
 # Create an MCP server instance
 mcp = FastMCP("StockSense")
@@ -75,6 +76,19 @@ def financial_advisor(stock_symbol: str) -> str:
     return get_financial_advisor(stock_symbol)
 
 @mcp.tool()
+def track_market_trends(stock_symbol: str) -> str:
+    """ 
+    Tracks and provides a market trend for a given stock symbol by querying DuckDuckGo and summarizing using Ollama.
+    
+    Arguments:
+        stock_symbol (str): The stock symbol to fetch market trends for.
+
+    Returns:
+        str: A simulated market trend summary.
+    """
+    return get_market_trends(stock_symbol)
+
+@mcp.tool()
 def analyze_sentiment(text: str) -> str:
     """
     Analyzes the sentiment of financial or stock-related text using a language model (LLM) via Ollama.
@@ -98,13 +112,6 @@ def analyze_sentiment(text: str) -> str:
         other domains or non-financial sentiment analysis tasks.
     """
     return get_sentiment_analysis(text)
-
-@mcp.tool()
-def track_market_trends(stock_symbol: str) -> str:
-    """
-    Simulating trend tracking by returning the stock symbol in uppercase.
-    """
-    return f"Market trend for {stock_symbol}: {stock_symbol.upper()}"
 
 # Start the MCP server and make it ready to accept requests
 if __name__ == "__main__":

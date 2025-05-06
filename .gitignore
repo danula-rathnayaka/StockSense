@@ -6,5 +6,7 @@ dist/
 wheels/
 *.egg-info
 
+langchain_chains/__pycache__/
+
 # Virtual environments
 .venv

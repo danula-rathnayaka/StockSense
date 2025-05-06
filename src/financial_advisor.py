@@ -1,7 +1,7 @@
 from langchain_ollama import ChatOllama
-from langchain_chains.stock_data import get_stock_data_by_period
-from langchain_chains.news_chain import get_news_analysis as get_news_analysis_chain
-from langchain_chains.analyze_sentiment import get_sentiment_analysis
+from src.stock_data import get_stock_data_by_period
+from src.news_chain import get_news_analysis as get_news_analysis_chain
+from src.analyze_sentiment import get_sentiment_analysis
 
 def get_financial_advisor(stock_symbol: str) -> str:
     """ 
